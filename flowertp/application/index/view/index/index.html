@@ -1,0 +1,62 @@
+{include  file="./public/common/top.html"/}
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<link href="__ROOT__/public/static/css/prodList.css" rel="stylesheet" type="text/css">
+	<title>首页</title>
+	<style>
+		.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}  
+		.pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}  
+		.pagination .active{background-color: #46A3FF;color: #fff;}  
+		.pagination .disabled{color:#aaa;}
+	</style>
+</head>
+<body>
+<center>
+	<div id="content">
+		<div id="search_div">
+			<form method="get" action="{:url('index/index')}">
+				<span class="input_span">商品名：<input type="text" name="fname" value="{$fname_}	"/></span>
+				<span class="input_span">商品种类：
+				<select name="fclass">
+				<Option value="">不限</option>
+				{foreach $fclasses as $fclass}
+					<Option value="{$fclass}"{if $fclass== $fclass_}selected{/if}>{$fclass}</Option>
+				{/foreach}
+				</select>
+				</span>
+				<span class="input_span">商品价格区间：<input type="text" name="minprice" value="{$min_}"/> - <input type="text" name="maxprice"  value="{$max_}"/></span>
+				<input type="submit" value="查 询" name="sub">
+			</form>
+		</div>{$page}
+		<div id="prod_content">
+		{foreach $flower as $f}
+			<div class="prod_div">
+			<a href="{:url('showflower/flowerdetail')}?flowerID={$f.flowerID}">
+				<img src="__ROOT__/public/static/picture/{$f.picturem}" border="0"/>
+			</a>
+				<div id="prod_name_div">
+				{$f.fname}	
+				</div>
+				<div id="prod_price_div">
+					￥{$f.yourprice}元
+				</div>
+				<div>
+					<div id="gotocart_div">
+					<a href="{:url('cart/addCart')}?flowerID={$f.flowerID}">加入购物车</a>
+					</div>					
+					<div id="say_div">
+						{$f.SelledNum}人购买
+					</div>					
+				</div>
+			</div>
+			
+			{/foreach}
+		<div style="clear: both"></div>	
+		</div>
+	</div>
+</center>
+
+</body>
+</html>

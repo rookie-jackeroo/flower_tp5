@@ -1,0 +1,288 @@
+{include file="./public/common/admintop.html"/}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>鲜花添加界面</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+        $(function () {
+            
+            var cheak = 0;
+            $("#flowerID").blur(function () {
+                var flowerID = $.trim($("#flowerID").val());
+                if (flowerID == "") {
+                    $("#m-flowerID").html("编号不能为空");
+                    return false;
+                } else if (flowerID.length > 15) {
+                    $("#m-flowerID").html("编号过长！请重新输入");
+                    return false;
+                } else {
+                    $("#m-flowerID").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+            
+            $("#first").change(function () {
+                var f = document.getElementById("first");
+                var s = document.getElementById("second");
+                s.options.length = 0;
+                if (f.selectedIndex == 0) {
+                    s.options.add(new Option("爱情鲜花", 0, false, true));
+                    s.options.add(new Option("友情鲜花", "1"));
+                    s.options.add(new Option("生日鲜花", "2"));
+                    s.options.add(new Option("问候长辈", "3"));
+                    s.options.add(new Option("回报老师", "4"));
+                    s.options.add(new Option("祝福庆贺", "5"));
+                    s.options.add(new Option("婚庆鲜花", "6"));
+                    s.options.add(new Option("探病慰问", "7"));
+                    s.options.add(new Option("生子祝贺", "8"));
+                    s.options.add(new Option("道歉鲜花", "9"));
+                    s.options.add(new Option("家居鲜花", "10"));
+                    s.options.add(new Option("丧葬哀思", "11"));
+                    s.options.add(new Option("开业乔迁", "12"));
+                    s.options.add(new Option("商务礼仪", "13"));
+                }
+                if (f.selectedIndex == 1) { }
+                if (f.selectedIndex == 2) { }//...
+            });
+            
+            $("#submit").click(function () {
+                if (cheak == 1) {
+                    $("#submit").submit();
+                    return true;
+                }else {
+                    return false;
+                }
+            })      
+                
+        });
+    </script>
+</head>
+
+<body>
+	<div style="margin:5% auto ;width:70%">
+        <form class="form-horizontal" method="POST" action="{:url('flower/flowerupdate')}?id={$flower.flowerID}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="flowerID" class="col-sm-2 control-label">编号:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="flowerID" name="flowerID" placeholder="编号" value="{$flower.flowerID}">
+                    <span id="m-flowerID" style="color:rgb(255, 0, 0)"></span>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="fname" class="col-sm-2 control-label">名称:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="名称" value="{$flower.fname}">
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="first" class="col-sm-2 control-label">类别:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="first" name="myclass" value="{$flower.myclass}">
+                        <option>鲜花</option>
+                        <option>蛋糕</option>
+                        <option>礼篮</option>
+                        <option>果篮</option>
+                        <option>公仔</option>
+                    </select>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="second" class="col-sm-2 control-label">用途:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="second" name="fclass" value="{$flower.fclass}">
+                        <option {if $flower.fclass == "爱情鲜花"} selected{/if}>爱情鲜花</option>
+                        <option {if $flower.fclass == "友情鲜花"} selected{/if}>友情鲜花</option>
+                        <option {if $flower.fclass == "生日鲜花"} selected{/if}>生日鲜花</option>
+                        <option {if $flower.fclass == "问候长辈"} selected{/if}>问候长辈</option>
+                        <option {if $flower.fclass == "回报老师"} selected{/if}>回报老师</option>
+                        <option {if $flower.fclass == "祝福庆贺"} selected{/if}>祝福庆贺</option>
+                        <option {if $flower.fclass == "婚庆鲜花"} selected{/if}>婚庆鲜花</option>
+                        <option {if $flower.fclass == "探病慰问"} selected{/if}>探病慰问</option>
+                        <option {if $flower.fclass == "生子祝贺"} selected{/if}>生子祝贺</option>
+                        <option {if $flower.fclass == "道歉鲜花"} selected{/if}>道歉鲜花</option>
+                        <option {if $flower.fclass == "家居鲜花"} selected{/if}>家居鲜花</option>
+                        <option {if $flower.fclass == "丧葬哀思"} selected{/if}>丧葬哀思</option>
+                        <option {if $flower.fclass == "开业乔迁"} selected{/if}>开业乔迁</option>
+                        <option {if $flower.fclass == "商务礼仪"} selected{/if}>商务礼仪</option>
+                    </select>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="third" class="col-sm-2 control-label">主材料:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="third" name="fclass1" value="{$flower.fclass1}">
+                        <option {if $flower.fclass1 == "玫瑰"} selected{/if}>玫瑰</option>
+                        <option {if $flower.fclass1 == "康乃馨"} selected{/if}>康乃馨</option>
+                        <option {if $flower.fclass1 == "郁金香"} selected{/if}>郁金香</option>
+                        <option {if $flower.fclass1 == "百合"} selected{/if}>百合</option>
+                        <option {if $flower.fclass1 == "芙兰"} selected{/if}>芙兰</option>
+                        <option {if $flower.fclass1 == "马蹄莲"} selected{/if}>马蹄莲</option>
+                        <option {if $flower.fclass1 == "向日葵"} selected{/if}>向日葵</option>
+                        <option {if $flower.fclass1 == "蓝色妖姬"} selected{/if}>蓝色妖姬</option>
+                    </select>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="cailiao" class="col-sm-2 control-label">材料:</label>
+                <div class="col-sm-5">
+                    <textarea class="form-control" id="cailiao" name="cailiao" placeholder="材料">{$flower.cailiao}</textarea>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="baozhuang" class="col-sm-2 control-label">包装:</label>
+                <div class="col-sm-5">
+                    <textarea class="form-control" id="baozhuang" name="baozhuang" placeholder="包装">{$flower.baozhuang}</textarea>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="huayu" class="col-sm-2 control-label">花语:</label>
+                <div class="col-sm-5">
+                    <textarea class="form-control" id="huayu" name="huayu" placeholder="花语">{$flower.huayu}</textarea>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="shuoming" class="col-sm-2 control-label">说明:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="shuoming" id="shuoming" placeholder="说明" value="{$flower.shuoming}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price" class="col-sm-2 control-label">市场价:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="price" id="price" placeholder="市场价" value="{$flower.price}">
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="yourprice" class="col-sm-2 control-label">现价:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="yourprice" id="yourprice" placeholder="现价" value="{$flower.yourprice}">
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="fourth" class="col-sm-2 control-label">是否特价:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="fourth" name="tejia" value="{$flower.tejia}">
+                        <option {if $flower.fclass1 == "是"} selected{/if}>是</option>
+                        <option {if $flower.fclass1 == "否"} selected{/if}>否</option>
+                    </select>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+            <div class="form-group">
+                <label for="pictures" class="col-sm-2 control-label">最小图片:</label>
+                <div class="col-sm-6">
+                    <input id="pictures" name="pictures" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.pictures}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.pictures != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="picturem" class="col-sm-2 control-label">图片:</label>
+                <div class="col-sm-6">
+                    <input id="picturem" name="picturem" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.picturem}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.picturem != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pictureb" class="col-sm-2 control-label">大图片:</label>
+                <div class="col-sm-6">
+                    <input id="pictureb" name="pictureb" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.pictureb}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.pictureb != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pictured" class="col-sm-2 control-label">详细介绍:</label>
+                <div class="col-sm-6">
+                    <input id="pictured" name="pictured" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.pictured}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.pictured != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cailiaopicture" class="col-sm-2 control-label">材料图片:</label>
+                <div class="col-sm-6">
+                    <input id="cailiaopicture" name="cailiaopicture" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.cailiaopicture}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.cailiaopicture != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bzpicture" class="col-sm-2 control-label">包装图片:</label>
+                <div class="col-sm-6">
+                    <input id="bzpicture" name="bzpicture" type="file" class="file" data-show-preview="true">
+                </div>
+                <div class="col-sm-4">
+                    <div style="text-align: center;"><img src="__ROOT__/public/static/picture/{$flower.bzpicture}" onload="if(this.width >= 250){this.width = 250}" alt="暂无"></div>
+                    {if $flower.bzpicture != ''}
+                    	<div class="file-caption-info"  style="text-align: center;">(原图)</div>
+                    {/if}
+                </div>
+            </div> 
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-2">
+                    <input type="submit" name="submit" id="submit" value="submit" class="btn btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+	<script
+		src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.7/js/fileinput.min.js"></script>
+	<link
+		href="http://plugins.krajee.com/assets/aac9b5a7/css/fileinput.min.css?ver=201804061549"
+		rel="stylesheet">
+	<link
+		href="http://plugins.krajee.com/assets/aac9b5a7/css/fileinput-rtl.min.css?ver=201804061549"
+		rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous">
+	<script
+		src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

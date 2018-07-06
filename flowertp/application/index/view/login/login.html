@@ -1,0 +1,187 @@
+{include file="./public/common/top.html"/}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登录界面</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+        	function randomNum(min, max) {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
+
+            function randomColor(min, max) {
+                var r = randomNum(min, max);
+                var g = randomNum(min, max);
+                var b = randomNum(min, max);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
+            function drawPic() {
+                var canvas = document.getElementById("canvas");
+                var width = canvas.width;
+                var height = canvas.height;
+
+                var ctx = canvas.getContext('2d');//获取该canvas的2D绘图环境
+                ctx.textBaseline = 'bottom';
+                ctx.fillStyle = randomColor(180, 240);//绘制背景色,颜色若太深可能导致看不清
+                ctx.fillRect(0, 0, width, height);
+
+                var str = 'ABCEFGHJKLMNPQRSTWXY123456789';
+                var code = "";
+                for (var i = 1; i <= 4; i++) {
+                    var txt = str[randomNum(0, str.length)];
+                    code = code + txt;
+
+                    ctx.fillStyle = randomColor(50, 160);//随机生成字体颜色
+                    ctx.font = randomNum(35, 45) + 'px SimHei';//随机生成字体大小
+
+                    var x = 10 + i * 25;
+                    var y = randomNum(35, 35);
+                    var deg = randomNum(-15, 15);
+
+                    ctx.translate(x, y);//修改坐标原点和旋转角度
+                    ctx.rotate(deg * Math.PI / 180);
+                    ctx.fillText(txt, 0, 0);
+                    ctx.rotate(-deg * Math.PI / 180);//恢复坐标原点和旋转角度
+                    ctx.translate(-x, -y);
+                }
+                for (var i = 0; i < 50; i++) {
+                    ctx.fillStyle = randomColor(255);
+                    ctx.beginPath();
+                    ctx.arc(randomNum(0, width), randomNum(0, height), 1, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                return code;
+            }
+
+            var cheak = 0;
+            var code = drawPic();
+            document.getElementById("changeImg").onclick = function (e) {
+                e.preventDefault();
+                code = drawPic();
+            }
+            $("#email").blur(function () {
+                var email = $.trim($("#email").val());
+                if (email == "") {
+                    $("#m-email").html("邮箱不能为空");
+                    return false;
+                }else{
+                	$("#m-email").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+
+            $("#pw").blur(function () {
+                var pw = $.trim($("#pw").val());
+                if (pw == "") {
+                    $("#m-pw").html("密码不能为空");
+                    return false;
+                } else {
+                    $("#m-pw").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+
+            $("#vcode").blur(function () {
+                var vcode = $.trim($("#vcode").val());
+                vcode = vcode.toUpperCase();
+                if (code != vcode) {
+                    $("#m-vcode").html("验证码错误！");
+                    return false;
+                } else {
+                    $("#m-vcode").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+
+            $("#login").click(function () {
+                if (cheak == 3) {
+                    $("#f1").submit();
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div style="margin: 2% auto; width: 50%">
+        <h3 class="text-center">请登录鲜花礼品网</h3>
+        <form method="post" class="form-horizontal" action="{:url('login/dologin')}" id='f1'>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Email:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control" id="suffix" name="suffix">
+                        <option>@163.com</option>
+                        <option>@qq.com</option>
+                        <option>@yahoo.com</option>
+                        <option>@sohu.com</option>
+                        <option>@sina.com</option>
+                        <option>@hotmail.com</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <span id="m-email" style="color: rgb(255, 0, 0)"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pw" class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" name="pw" id="pw" placeholder="Password">
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-2">
+                    <span id="m-pw" style="color: rgb(255, 0, 0)"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="vcode" class="col-sm-2 control-label">V Code:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="vcode" id="vcode" placeholder="Verification Code">
+                </div>
+                <div class="col-sm-3">
+                    <a href="#" id="changeImg">
+                        <canvas id="canvas" width="175px" height="32px"></canvas>
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <span id="m-vcode" style="color: rgb(255, 0, 0)"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-3">
+                    <input type="button" name="login" id="login" value="登录" class="btn btn-info" />
+                </div>
+                <div class="col-sm-2 ">
+               		<a href={:url('register/register')}>
+                    	<input type="button" name="register" id="register" value="注册" class="btn btn-info" />
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

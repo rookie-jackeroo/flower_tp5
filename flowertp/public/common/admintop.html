@@ -1,0 +1,42 @@
+﻿<meta charset="utf-8">
+<center>
+	<table width=999px border=0>
+		<tr>
+			<td rowspan=2><img src="__ROOT__/public/static/image/logo.jpg" style="width: 216px; height: 68px"></td>
+			<td style="font-size: x-small;"></td>
+			<td style="background: url('__ROOT__/public/static/image/topxmenubg.jpg'); font-size: x-small; text-align: center;"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="text-align: right;"><img src="__ROOT__/public/static/image/ttel.jpg"></td>
+		</tr>
+		<tr>
+			<td colspan=3 style="background: url('__ROOT__/public/static/image/bg-navbox.png'); font-size: small; text-align: center; width: 999px; height: 40px">
+				<a href="{:url('administrator/adminshowflower')}" style="text-decoration: none;">
+					<span style="color: White; font-weight: bold; font-size: medium; font-family: 宋体">|&nbsp; &nbsp; 鲜花管理&nbsp; &nbsp; |&nbsp;&nbsp;</span>
+				</a>  
+				<a href="{:url('administrator/adminorderlist')}" style="text-decoration: none;">
+					<span style="color: White; font-weight: bold; font-size: medium; font-family: 宋体">订单管理&nbsp; &nbsp;|&nbsp;&nbsp; </span>
+				</a> 
+				<a href="" style="text-decoration: none;">
+					<span style="color: White; font-weight: bold; font-size: medium; font-family: 宋体">评价管理&nbsp; &nbsp;|&nbsp;&nbsp; </span>
+				</a> 
+				<a href="{:url('index/index')}" style="text-decoration: none;">
+					<span style="color: White; font-weight: bold; font-size: medium; font-family: 宋体">前台主页&nbsp; &nbsp;|&nbsp;&nbsp; </span>
+				</a>  
+				<a href="{:url('administrator/adminindex')}" style="text-decoration: none;">
+					<span style="color: White; font-weight: bold; font-size: medium; font-family: 宋体">后台主页&nbsp; &nbsp;|&nbsp;&nbsp; </span>
+				</a>
+				{if $Think.session.username !=''} 
+ 				<a href="{:url('administrator/logout')}" style="text-decoration: none;"><font color=blue>退出</font></a>&nbsp;&nbsp;
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td colspan=3
+				style="background: url('__ROOT__/public/static/image/search_bg.jpg'); font-size: small; text-align: center; width: 999px; height: 35px">
+
+			</td>
+		</tr>
+	</table>
+</center>

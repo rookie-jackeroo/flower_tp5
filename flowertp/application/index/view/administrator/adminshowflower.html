@@ -1,0 +1,72 @@
+{include file="./public/common/admintop.html"/}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>鲜花管理</title>
+<style>
+#t td {
+	border-collapse: collapse;
+	border: 1px solid #CCCCCC;
+}
+
+.pagination {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.pagination li {
+	margin: 0px 10px;
+	border: 1px solid #e6e6e6;
+	padding: 3px 8px;
+	display: inline-block;
+}
+
+.pagination .active {
+	background-color: #46A3FF;
+	color: #fff;
+}
+
+.pagination .disabled {
+	color: #aaa;
+}
+</style>
+</head>
+<body>
+	<center>
+
+		<table id="t" width="997px " cellspacing="0" cellpadding="0"
+			; style="border: 1px solid #CCCCCC; border-collapse: collapse;">
+			<tr style="background-color: #CCCCCC;">
+				<td align="center" width="10%"><font size=4>商品编号</font></td>
+				<td align="center" width="25%"><font size=4>商品图片</font></td>
+				<td align="center" width="15%"><font size=4>商品名称</font></td>
+				<td align="center" width="10%"><font size=4>原价</font></td>
+				<td align="center" width="10%"><font size=4>现价</font></td>
+				<td align="center" width="10%"><font size=4>数量</font></td>
+				<td align="center" width="20%"><font size=4>操作</font></td>
+			</tr>
+			{foreach $flower as $f}
+			<tr>
+				<td align="center" width="10%">{$f.flowerID}</td>
+				<td align="center" width="25%"><img
+					src="__ROOT__/public/static/picture/{$f.picturem}" border=0
+					alt="暂无" /></td>
+				<td align="left" width="15%">{$f.fname}</td>
+				<td align="center" width="10%">￥{$f.price}</td>
+				<td align="center" width="10%"><font size=4 color=red>￥{$f.yourprice}</font></td>
+				<td align="center" width="10%">{$f.SelledNum}</td>
+				<td align="center" width="20%">
+					<font size=4 color=blue>
+					<a href="{:url('administrator/adminflowerlist')}?id={$f.flowerID}">修改</a>&nbsp;&nbsp;&nbsp; 
+					<a href="{:url('flower/flowerdelete')}?id={$f.flowerID}">删除</a>
+					</font>
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+		{$page}
+	</center>
+</body>
+</html>

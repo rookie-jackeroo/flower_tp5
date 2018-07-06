@@ -1,0 +1,85 @@
+{include file="./public/common/admintop.html"/}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台登录</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+        $(function () {
+            var cheak = 0;
+            $("#username").blur(function () {
+                var username = $.trim($("#username").val());
+                if (username == "") {
+                    $("#m-username").html("管理员账号不能为空");
+                    return false;
+                } else {
+                    $("#m-username").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+
+            $("#password").blur(function () {
+                var password = $.trim($("#password").val());
+                if (password == "") {
+                    $("#m-password").html("密码不能为空");
+                    return false;
+                } else {
+                    $("#m-password").html(" ");
+                    cheak += 1;
+                    return true;
+                }
+            });
+
+            $("#login").click(function () {
+                if (cheak == 2) {
+                    $("#login").submit();
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+
+        });
+    </script>
+</head>
+<body>
+	
+	<div style="margin: 2% auto; width: 50%">
+        <h3 class="text-center">鲜花礼品网后台登录</h3>
+        <form method="post" class="form-horizontal" action="{:url('administrator/dologin')}" name=f>
+            <div class="form-group">
+                <label for="username" class="col-sm-4 control-label">Administrator:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="username">
+                </div>
+                <div class="col-sm-4">
+                    <span id="m-username" style="color: rgb(255, 0, 0)"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-4 control-label">Password:</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="col-sm-4">
+                    <span id="m-password" style="color: rgb(255, 0, 0)"></span>
+                </div>
+            </div> 
+            <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-5">
+                    <input type="submit" name="login" id="login" value="login" class="btn btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
